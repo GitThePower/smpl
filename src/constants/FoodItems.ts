@@ -8,31 +8,31 @@ export class FoodItem {
   equals = (otherFood: FoodItem): boolean => this.description === otherFood.description;
 }
 
-export const BEANS_BLACK = new FoodItem(
-  'Black beans'
+export const CANNED_BEANS_BLACK = new FoodItem(
+  'Canned black beans'
 );
 
-export const BEANS_PINTO = new FoodItem(
-  'Pinto beans'
+export const CANNED_BEANS_PINTO = new FoodItem(
+  'Canned pinto beans'
 );
 
-export const BEANS_RED_KIDNEY = new FoodItem(
-  'Red kidney beans'
+export const CANNED_BEANS_RED_KIDNEY = new FoodItem(
+  'Canned red kidney beans'
 );
 
-export const BEANS_WHITE_KIDNEY = new FoodItem(
-  'White kidney beans'
+export const CANNED_BEANS_WHITE_KIDNEY = new FoodItem(
+  'Canned white kidney beans'
 );
 
-export const CHICKPEAS = new FoodItem(
-  'Chickpeas'
+export const CANNED_CHICKPEAS = new FoodItem(
+  'Canned chickpeas'
 );
 
-export const DICED_TOMATOES = new FoodItem(
-  'Diced tomatoes'
+export const CANNED_DICED_TOMATOES = new FoodItem(
+  'Canned diced tomatoes'
 );
 
-export const PASTA_SAUCE = new FoodItem(
+export const PASTA_SAUCE_RED_VEGAN = new FoodItem(
   'Red pasta sauce, vegan'
 );
 
@@ -48,6 +48,10 @@ export const CASHEWS_RAW = new FoodItem(
   'Raw cashews'
 );
 
+export const CHOCOLATE_CHIPS_DARK_VEGAN = new FoodItem(
+  'Vegan dark chocolate chips'
+);
+
 export const FLAXSEED_GROUND = new FoodItem(
   'Ground flaxseed'
 );
@@ -58,6 +62,10 @@ export const FLOUR_WHOLE_WHEAT = new FoodItem(
 
 export const MAPLE_SYRUP = new FoodItem(
   'Maple syrup'
+);
+
+export const MAYONNAISE = new FoodItem(
+  'Mayonnaise'
 );
 
 export const MUSTARD_DIJON = new FoodItem(
@@ -110,10 +118,6 @@ export const TORTILLAS_WHOLE_WHEAT = new FoodItem(
 
 export const VANILLA_EXTRACT = new FoodItem(
   'Vanilla extract'
-);
-
-export const VEGAN_DARK_CHOCOLATE_CHIPS = new FoodItem(
-  'Vegan dark chocolate chips'
 );
 
 export const VINEGAR_APPLE_CIDER = new FoodItem(
@@ -213,7 +217,11 @@ export const FROZEN_BLUEBERRIES = new FoodItem(
 );
 
 export const FROZEN_BROCCOLI = new FoodItem(
-  'Frozen broccoli'
+  'Frozen broccoli florets'
+);
+
+export const FROZEN_CHERRIES = new FoodItem(
+  'Frozen cherries'
 );
 
 export const FROZEN_COCONUT_GRATES = new FoodItem(
@@ -236,12 +244,20 @@ export const FROZEN_PINEAPPLE = new FoodItem(
   'Frozen pineapple'
 );
 
+export const AQUAFABA = new FoodItem(
+  'Aquafaba (the liquid from a can of chickpeas)'
+);
+
 export const BASIL_DRIED = new FoodItem(
   'Dried basil'
 );
 
 export const CAYENNE_PEPPER = new FoodItem(
   'Cayenne pepper'
+);
+
+export const CHICK_N_BOUILLON_VEGAN = new FoodItem(
+  "Vegan Chick'n Bouillon"
 );
 
 export const CHILLI_POWDER = new FoodItem(
@@ -272,6 +288,14 @@ export const PEPPER_BLACK = new FoodItem(
   'Black pepper'
 );
 
+export const POULTRY_SEASONING_VEGAN = new FoodItem(
+  'Vegan poultry seasoning'
+);
+
+export const PROTEIN_POWDER_PEA = new FoodItem(
+  'Pea protein powder'
+);
+
 export const SALT_PINK_HIMALAYAN = new FoodItem(
   'Pink Himalayan salt'
 );
@@ -279,11 +303,22 @@ export const SALT_PINK_HIMALAYAN = new FoodItem(
 export const TUMERIC = new FoodItem(
   'Tumeric'
 );
-
-export const VEGAN_CHICK_N_BOUILLON = new FoodItem(
-  "Vegan Chick'n Bouillon"
+export const JUICE_LEMON = new FoodItem(
+  'Lemon juice'
 );
 
-export const VEGAN_POULTRY_SEASONING = new FoodItem(
-  'Vegan poultry seasoning'
+export const MILK_COCONUT_UNSWEETENED = new FoodItem(
+  'Coconut milk, unsweetened (not canned)'
+);
+
+export const MILK_PLANT_BASED_UNSWEETENED = new FoodItem(
+  'Plant-based milk, unsweetened'
+);
+
+export const TOFU_FIRM = new FoodItem(
+  'Firm tofu'
+);
+
+export const WATER = new FoodItem(
+  'Water'
 );
