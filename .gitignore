@@ -103,11 +103,22 @@ dist
 # TernJS port file
 .tern-port
 
-# CDK typescript project
+# CDK Build Files
 *.js
 !jest.config.js
 *.d.ts
 
-# CDK asset staging directory
+# CDK Context & Staging files
 .cdk.staging
 cdk.out
+cdk.context.json
+*.tabl.json
+
+# npm target directory
+target/
+
+# Configuration Values
+local-config/
+
+# Package Lock
+package-lock.json

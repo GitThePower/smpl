@@ -1,15 +1,26 @@
 {
-  "name": "cdk",
+  "name": "smpl",
   "version": "0.1.0",
+  "description": "Automated Crypto Currency Trading via APIs",
+  "main": "index.js",
+  "types": "lib/index.d.ts",
   "bin": {
-    "cdk": "bin/cdk.js"
+    "cdk": "bin/index.js"
   },
   "scripts": {
     "build": "tsc",
-    "watch": "tsc -w",
-    "test": "jest",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "cleanup": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./cleanUp.ps1",
+    "deploy": "tsc && jest -- stack.test.ts && cdk synth && cdk deploy --require-approval never && npm run cleanup",
+    "test": "tsc && jest && npm run cleanup",
+    "test-one": "jest --"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GitThePower/smpl.git"
+  },
+  "author": "Henry Power",
+  "license": "None",
   "devDependencies": {
     "@types/jest": "^27.5.2",
     "@types/node": "10.17.27",
