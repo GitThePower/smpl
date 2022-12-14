@@ -2,11 +2,13 @@
 import 'source-map-support/register';
 import { App } from 'aws-cdk-lib';
 import { config } from '../local-config';
-import { CdkStack } from '../lib/cdk-stack';
+import { SmplStack } from '../lib/stack';
 
 const app = new App();
+const appName = 'smpl';
 const { awsAccountNumber, awsRegion } = config;
 
-new CdkStack(app, 'CdkStack', {
-  env: { account: awsAccountNumber, region: awsRegion }
+new SmplStack(app, `${appName}-stack`, {
+  env: { account: awsAccountNumber, region: awsRegion },
+  stackName: `${appName}`
 });
