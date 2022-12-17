@@ -105,6 +105,8 @@ dist
 
 # CDK Build Files
 *.js
+!src/**/*.js
+!test/src/**/*.js
 !jest.config.js
 *.d.ts
 
