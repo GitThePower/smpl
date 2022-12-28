@@ -1,7 +1,7 @@
 {
   "name": "smpl",
   "version": "0.1.0",
-  "description": "Automated Crypto Currency Trading via APIs",
+  "description": "App that makes things simple",
   "main": "index.js",
   "types": "lib/index.d.ts",
   "bin": {
@@ -11,8 +11,8 @@
     "build": "tsc",
     "cdk": "cdk",
     "cleanup": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./cleanUp.ps1",
-    "deploy": "tsc && jest -- stack.test.ts && cdk synth && cdk deploy --require-approval never && npm run cleanup",
-    "test": "tsc && jest && npm run cleanup",
+    "deploy": "tsc && jest -- stack.test.ts && cdk synth && cdk deploy --require-approval never",
+    "test": "jest",
     "test-one": "jest --"
   },
   "repository": {
