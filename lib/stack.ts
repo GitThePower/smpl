@@ -5,7 +5,7 @@ import { createApiGateway } from './api-gateway';
 import { createDynamoDBTable } from './dynamodb';
 import { createLambdaFunction, createLambdaRole } from './lambda';
 
-const RESOURCES = ['food, meal, mealplan', 'user'];
+const RESOURCES = ['food', 'meal', 'mealplan', 'user'];
 
 interface SmplStackProps extends StackProps {
   env: {
