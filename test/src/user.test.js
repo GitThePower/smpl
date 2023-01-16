@@ -1,12 +1,14 @@
 const AWS = require('aws-sdk-mock');
-const lambda = require('../../src/food');
+const lambda = require('../../src/user');
 
 process.env.TABLE_NAME = 'someTable';
 
-describe('food accessor function ', () => {
+describe('user accessor function ', () => {
   const ddbItemId = '123';
   const ddbItemAttributes = {
-    description: 'Updated item'
+    username: 'someUser',
+    password: 'somePassword',
+    mealPlan: 'somePlan'
   };
   const obj = Object.keys(ddbItemAttributes).reduce((prev, curr) => {
     prev[curr] = { S: ddbItemAttributes[curr] };
