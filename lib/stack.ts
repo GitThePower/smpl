@@ -7,8 +7,16 @@ import { createLambdaFunction, createLambdaRole } from './lambda';
 
 const RESOURCES = ['food, meal, mealplan', 'user'];
 
+interface SmplStackProps extends StackProps {
+  env: {
+    account: string;
+    region: string;
+  };
+  stackName: string;
+}
+
 export class SmplStack extends Stack {
-  constructor(scope: Construct, id: string, props: StackProps) {
+  constructor(scope: Construct, id: string, props: SmplStackProps) {
     super(scope, id, props);
 
     const restApi = createApiGateway(this, `${props.stackName}-api`);
