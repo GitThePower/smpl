@@ -1,27 +1,6 @@
 const AWS = require('aws-sdk');
 const { v4: uuidv4 } = require('uuid');
 
-let DynamoDB = null;
-
-const valToDdbVal = (val) => {
-  if (typeof val == 'bigint' || typeof val == 'number') { return { N: `${val}` }; }
-  else if (typeof val == 'boolean') { return { BOOL: val }; }
-  else if (typeof val == 'string') { return { S: val }; }
-  else if (typeof val == 'object') {
-    if (Array.isArray(val)) {
-      return { L: val.map(elem => valToDdbVal(elem)) };
-    } else {
-      return {
-        M: Object.keys(val).reduce((prev, curr) => {
-          prev[curr] = valToDdbVal(val[curr]);
-          return prev;
-        }, {})
-      };
-    }
-  }
-  else { return { NULL: true }; }
-};
-
 /**
  * GET handler for retrieving an item from DynamoDB
  * @param {Object} event HTTP event
@@ -45,7 +24,7 @@ const handleGet = async (event) => {
   };
 
   try {
-    const ddb = DynamoDB ? DynamoDB : new AWS.DynamoDB({ apiVersion: '2012-08-10' });
+    let ddb = new AWS.DynamoDB({ apiVersion: '2012-08-10' });
     const data = await ddb.getItem(params).promise();
     return {
       statusCode: 200,
@@ -76,7 +55,7 @@ const handlePost = async (event, schema) => {
   }
 
   const obj = Object.keys(value).reduce((prev, curr) => {
-    prev[curr] = valToDdbVal(value[curr]);
+    prev[curr] = AWS.DynamoDB.Converter.input(value[curr]);
     return prev;
   }, {});
 
@@ -89,7 +68,7 @@ const handlePost = async (event, schema) => {
   };
 
   try {
-    const ddb = DynamoDB ? DynamoDB : new AWS.DynamoDB({ apiVersion: '2012-08-10' });
+    let ddb = new AWS.DynamoDB({ apiVersion: '2012-08-10' });
     await ddb.putItem(params).promise();
     return {
       statusCode: 200,
@@ -135,7 +114,7 @@ const handlePut = async (event, schema) => {
   UpdateExpression = UpdateExpression.slice(0, -1);
 
   const ExpressionAttributeValues = Object.keys(value).reduce((prev, curr) => {
-    prev[`:${curr}`] = valToDdbVal(value[curr]);
+    prev[`:${curr}`] = AWS.DynamoDB.Converter.input(value[curr]);
     return prev;
   }, {});
 
@@ -150,7 +129,7 @@ const handlePut = async (event, schema) => {
   };
 
   try {
-    const ddb = DynamoDB ? DynamoDB : new AWS.DynamoDB({ apiVersion: '2012-08-10' });
+    let ddb = new AWS.DynamoDB({ apiVersion: '2012-08-10' });
     const data = await ddb.updateItem(params).promise();
     return {
       statusCode: 200,
@@ -187,7 +166,7 @@ const handleDelete = async (event) => {
   };
 
   try {
-    const ddb = DynamoDB ? DynamoDB : new AWS.DynamoDB({ apiVersion: '2012-08-10' });
+    let ddb = new AWS.DynamoDB({ apiVersion: '2012-08-10' });
     await ddb.deleteItem(params).promise();
     return {
       statusCode: 200,
@@ -205,6 +184,5 @@ module.exports = {
   handleDelete,
   handleGet,
   handlePost,
-  handlePut,
-  valToDdbVal
+  handlePut
 }

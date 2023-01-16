@@ -1,8 +1,8 @@
-const AWS = require('aws-sdk-mock');
+const AWS = require('aws-sdk');
+const AWSMock = require('aws-sdk-mock');
 const { v4: uuidv4 } = require('uuid');
 const lambda = require('../../src/mealplan');
 const { schemaExample } = require('../../src/mealplan/schema');
-const { valToDdbVal } = require('../../src/utils/ddbCrud');
 
 process.env.TABLE_NAME = 'someTable';
 
@@ -10,7 +10,7 @@ describe('mealplan accessor function ', () => {
   const ddbItemId = uuidv4();
   const ddbItemAttributes = schemaExample;
   const obj = Object.keys(ddbItemAttributes).reduce((prev, curr) => {
-    prev[curr] = valToDdbVal(ddbItemAttributes[curr]);
+    prev[curr] = AWS.DynamoDB.Converter.input(ddbItemAttributes[curr]);
     return prev;
   }, {});
   const ddbItem = {
@@ -19,12 +19,12 @@ describe('mealplan accessor function ', () => {
   };
 
   afterEach(() => {
-    AWS.restore();
+    AWSMock.restore();
   });
 
   describe('handles GET', () => {
     test('no id given', async () => {
-      AWS.mock('DynamoDB', 'getItem', (params, callback) => {
+      AWSMock.mock('DynamoDB', 'getItem', (params, callback) => {
         callback(null, {
           Item: ddbItem
         });
@@ -40,7 +40,7 @@ describe('mealplan accessor function ', () => {
 
     test('DynamoDB error', async () => {
       const errMsg = 'an error occurred';
-      AWS.mock('DynamoDB', 'getItem', (params, callback) => {
+      AWSMock.mock('DynamoDB', 'getItem', (params, callback) => {
         callback(errMsg, null);
       });
 
@@ -55,7 +55,7 @@ describe('mealplan accessor function ', () => {
     });
 
     test('success', async () => {
-      AWS.mock('DynamoDB', 'getItem', (params, callback) => {
+      AWSMock.mock('DynamoDB', 'getItem', (params, callback) => {
         callback(null, {
           Item: ddbItem
         });
@@ -74,7 +74,7 @@ describe('mealplan accessor function ', () => {
 
   describe('handles POST', () => {
     test('invalid object', async () => {
-      AWS.mock('DynamoDB', 'putItem', (params, callback) => {
+      AWSMock.mock('DynamoDB', 'putItem', (params, callback) => {
         callback(null, {});
       });
     
@@ -88,7 +88,7 @@ describe('mealplan accessor function ', () => {
 
     test('DynamoDB error', async () => {
       const errMsg = 'an error occurred';
-      AWS.mock('DynamoDB', 'putItem', (params, callback) => {
+      AWSMock.mock('DynamoDB', 'putItem', (params, callback) => {
         callback(errMsg, null);
       });
     
@@ -101,7 +101,7 @@ describe('mealplan accessor function ', () => {
     });
 
     test('success', async () => {
-      AWS.mock('DynamoDB', 'putItem', (params, callback) => {
+      AWSMock.mock('DynamoDB', 'putItem', (params, callback) => {
         callback(null, {});
       });
     
@@ -119,7 +119,7 @@ describe('mealplan accessor function ', () => {
 
   describe('handles PUT', () => {
     test('no id given', async () => {
-      AWS.mock('DynamoDB', 'updateItem', (params, callback) => {
+      AWSMock.mock('DynamoDB', 'updateItem', (params, callback) => {
         callback(null, {
           Attributes: ddbItem
         });
@@ -135,7 +135,7 @@ describe('mealplan accessor function ', () => {
     });
 
     test('invalid object', async () => {
-      AWS.mock('DynamoDB', 'updateItem', (params, callback) => {
+      AWSMock.mock('DynamoDB', 'updateItem', (params, callback) => {
         callback(null, {
           Attributes: ddbItem
         });
@@ -154,7 +154,7 @@ describe('mealplan accessor function ', () => {
 
     test('DynamoDB error', async () => {
       const errMsg = 'an error occurred';
-      AWS.mock('DynamoDB', 'updateItem', (params, callback) => {
+      AWSMock.mock('DynamoDB', 'updateItem', (params, callback) => {
         callback(errMsg, null);
       });
 
@@ -170,7 +170,7 @@ describe('mealplan accessor function ', () => {
     });
 
     test('success', async () => {
-      AWS.mock('DynamoDB', 'updateItem', (params, callback) => {
+      AWSMock.mock('DynamoDB', 'updateItem', (params, callback) => {
         callback(null, {
           Attributes: ddbItem
         });
@@ -190,7 +190,7 @@ describe('mealplan accessor function ', () => {
 
   describe('handles DELETE', () => {
     test('no id given', async () => {
-      AWS.mock('DynamoDB', 'deleteItem', (params, callback) => {
+      AWSMock.mock('DynamoDB', 'deleteItem', (params, callback) => {
         callback(null, {});
       });
 
@@ -204,7 +204,7 @@ describe('mealplan accessor function ', () => {
 
     test('DynamoDB error', async () => {
       const errMsg = 'an error occurred';
-      AWS.mock('DynamoDB', 'deleteItem', (params, callback) => {
+      AWSMock.mock('DynamoDB', 'deleteItem', (params, callback) => {
         callback(errMsg, null);
       });
 
@@ -219,7 +219,7 @@ describe('mealplan accessor function ', () => {
     });
 
     test('success', async () => {
-      AWS.mock('DynamoDB', 'deleteItem', (params, callback) => {
+      AWSMock.mock('DynamoDB', 'deleteItem', (params, callback) => {
         callback(null, {});
       });
     
