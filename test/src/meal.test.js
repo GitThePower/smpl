@@ -1,12 +1,13 @@
 const AWS = require('aws-sdk-mock');
-const lambda = require('../../src/user');
-const { schemaExample } = require('../../src/user/schema');
+const { v4: uuidv4 } = require('uuid');
+const lambda = require('../../src/meal');
+const { schemaExample } = require('../../src/meal/schema');
 const { valToDdbVal } = require('../../src/utils/ddbCrud');
 
 process.env.TABLE_NAME = 'someTable';
 
-describe('user accessor function ', () => {
-  const ddbItemId = '123';
+describe('meal accessor function ', () => {
+  const ddbItemId = uuidv4();
   const ddbItemAttributes = schemaExample;
   const obj = Object.keys(ddbItemAttributes).reduce((prev, curr) => {
     prev[curr] = valToDdbVal(ddbItemAttributes[curr]);

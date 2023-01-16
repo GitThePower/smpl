@@ -1,9 +1,5 @@
-const Joi = require("joi");
 const { handleGet, handlePost, handlePut, handleDelete } = require('../utils/ddbCrud');
-
-const schema = Joi.object({
-  description: Joi.string()
-}).min(1).unknown(false);
+const { schema } = require('./schema');
 
 exports.handler = async (event) => {
   const httpMethod = event.httpMethod;

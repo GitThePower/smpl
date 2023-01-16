@@ -1,14 +1,14 @@
 const AWS = require('aws-sdk-mock');
+const { v4: uuidv4 } = require('uuid');
 const lambda = require('../../src/food');
+const { schemaExample } = require('../../src/food/schema');
 const { valToDdbVal } = require('../../src/utils/ddbCrud');
 
 process.env.TABLE_NAME = 'someTable';
 
 describe('food accessor function ', () => {
-  const ddbItemId = '123';
-  const ddbItemAttributes = {
-    description: 'Updated item'
-  };
+  const ddbItemId = uuidv4();
+  const ddbItemAttributes = schemaExample;
   const obj = Object.keys(ddbItemAttributes).reduce((prev, curr) => {
     prev[curr] = valToDdbVal(ddbItemAttributes[curr]);
     return prev;
