@@ -3,6 +3,25 @@ const { v4: uuidv4 } = require('uuid');
 
 let DynamoDB = null;
 
+const valToDdbVal = (val) => {
+  if (typeof val == 'bigint' || typeof val == 'number') { return { N: `${val}` }; }
+  else if (typeof val == 'boolean') { return { BOOL: val }; }
+  else if (typeof val == 'string') { return { S: val }; }
+  else if (typeof val == 'object') {
+    if (Array.isArray(val)) {
+      return { L: val.map(elem => valToDdbVal(elem)) };
+    } else {
+      return {
+        M: Object.keys(val).reduce((prev, curr) => {
+          prev[curr] = valToDdbVal(val[curr]);
+          return prev;
+        }, {})
+      };
+    }
+  }
+  else { return { NULL: true }; }
+};
+
 /**
  * GET handler for retrieving an item from DynamoDB
  * @param {Object} event HTTP event
@@ -57,7 +76,7 @@ const handlePost = async (event, schema) => {
   }
 
   const obj = Object.keys(value).reduce((prev, curr) => {
-    prev[curr] = { S: value[curr] };
+    prev[curr] = valToDdbVal(value[curr]);
     return prev;
   }, {});
 
@@ -109,17 +128,17 @@ const handlePut = async (event, schema) => {
     };
   }
 
-  let UpdateExpression  = 'SET';
+  let UpdateExpression = 'SET';
   Object.keys(value).map((key) => {
     UpdateExpression = UpdateExpression + ` ${key}:=${value[key]},`;
   });
   UpdateExpression = UpdateExpression.slice(0, -1);
 
   const ExpressionAttributeValues = Object.keys(value).reduce((prev, curr) => {
-    prev[`:${curr}`] = { S: value[curr] };
+    prev[`:${curr}`] = valToDdbVal(value[curr]);
     return prev;
   }, {});
-  
+
   const params = {
     TableName: process.env.TABLE_NAME,
     Key: {
@@ -129,7 +148,7 @@ const handlePut = async (event, schema) => {
     ExpressionAttributeValues,
     ReturnValues: 'ALL_NEW'
   };
-  
+
   try {
     const ddb = DynamoDB ? DynamoDB : new AWS.DynamoDB({ apiVersion: '2012-08-10' });
     const data = await ddb.updateItem(params).promise();
@@ -145,7 +164,11 @@ const handlePut = async (event, schema) => {
   }
 }
 
-// Handles a DELETE request
+/**
+ * DELETE handler for deleting an item from DynamoDB
+ * @param {Object} event HTTP event
+ * @returns {Object} response
+ */
 const handleDelete = async (event) => {
   const { id: itemId } = event.pathParameters;
 
@@ -182,5 +205,6 @@ module.exports = {
   handleDelete,
   handleGet,
   handlePost,
-  handlePut
+  handlePut,
+  valToDdbVal
 }

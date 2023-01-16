@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const { handleGet, handlePost, handlePut, handleDelete } = require('../utils/ddbCrudHandlers');
+const { handleGet, handlePost, handlePut, handleDelete } = require('../utils/ddbCrud');
 
 const schema = Joi.object({
   username: Joi.string(),

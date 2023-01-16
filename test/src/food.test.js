@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk-mock');
 const lambda = require('../../src/food');
+const { valToDdbVal } = require('../../src/utils/ddbCrud');
 
 process.env.TABLE_NAME = 'someTable';
 
@@ -9,7 +10,7 @@ describe('food accessor function ', () => {
     description: 'Updated item'
   };
   const obj = Object.keys(ddbItemAttributes).reduce((prev, curr) => {
-    prev[curr] = { S: ddbItemAttributes[curr] };
+    prev[curr] = valToDdbVal(ddbItemAttributes[curr]);
     return prev;
   }, {});
   const ddbItem = {
