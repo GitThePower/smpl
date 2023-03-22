@@ -17,7 +17,7 @@ const handleGet = async (event) => {
   }
 
   const params = {
-    TableName: process.env.TABLE_NAME,
+    TableName: process.env.DB_TABLE_NAME,
     Key: {
       id: { S: itemId }
     }
@@ -60,7 +60,7 @@ const handlePost = async (event, schema) => {
   }, {});
 
   const params = {
-    TableName: process.env.TABLE_NAME,
+    TableName: process.env.DB_TABLE_NAME,
     Item: {
       id: { S: uuidv4() },
       ...obj
@@ -119,7 +119,7 @@ const handlePut = async (event, schema) => {
   }, {});
 
   const params = {
-    TableName: process.env.TABLE_NAME,
+    TableName: process.env.DB_TABLE_NAME,
     Key: {
       id: { S: itemId }
     },
@@ -159,7 +159,7 @@ const handleDelete = async (event) => {
   }
 
   const params = {
-    TableName: process.env.TABLE_NAME,
+    TableName: process.env.DB_TABLE_NAME,
     Key: {
       id: { S: itemId }
     }

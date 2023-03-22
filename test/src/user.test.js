@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const lambda = require('../../src/user');
 const { schemaExample } = require('../../src/user/schema');
 
-process.env.TABLE_NAME = 'someTable';
+process.env.DB_TABLE_NAME = 'someTable';
 
 describe('user accessor function ', () => {
   const ddbItemId = uuidv4();

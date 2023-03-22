@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const lambda = require('../../src/food');
 const { schemaExample } = require('../../src/food/schema');
 
-process.env.TABLE_NAME = 'someTable';
+process.env.DB_TABLE_NAME = 'someTable';
 
 describe('food accessor function ', () => {
   const ddbItemId = uuidv4();
